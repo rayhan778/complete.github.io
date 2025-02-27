@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Bazar XI RPL-2</title>
+    <link rel="icon" href="logo.jpg">
+
+    <!-- CSS Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .cart-badge {
+            position: relative;
+        }
+        .cart-badge::after {
+            content: attr(data-count);
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
+        .cta {
+            background-color: #f39c12;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .cta:hover {
+            background-color: #e67e22;
+        }
+    </style>
+</head>
+<body class="bg-rose-100">
+    <!-- Header -->
+    <header class="bg-rose-50">
+        <nav class="bg-rose-950 text-yellow-100 sticky top-0 z-100 shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center">
+                        <img alt="Company Logo" class="h-8 w-8 rounded-full" src="logo.jpg" />
+                        <h1 class="text-lg font-bold sm:text-xl px-2">Bazar - XI RPL-2</h1>
+                    </div>
+                    <div class="hidden sm:flex sm:space-x-8">
+                        <a class="border-sky-50 text-white hover:text-yellow-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="index.html">Beranda</a>
+                        <a class="border-transparent text-white hover:text-yellow-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="menu.html#">Menu</a>
+                        <button id="cart-button" class="cart-badge bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-full" data-count="0" aria-label="Keranjang Belanja">🛒 Keranjang</button>
+                    </div>
+                    <div class="-mr-2 flex sm:hidden">
+                        <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false" id="mobile-menu-button">
+                            <span class="sr-only">Open main menu</span>
+                            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                            </svg>
+                            <svg class="hidden h-6 w-6" xmlns="http://www.w3 ```html
+.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Mobile menu -->
+            <div class="sm:hidden" id="mobile-menu">
+                <div class="space-y-1 px-2 pb-3">
+                    <a class="border-sky-50 text-yellow-50 hover:text-yellow-200 block px-3 py-2 rounded-md text-base font-medium" href="index.html">Beranda</a>
+                    <a class="border-transparent text-yellow-50 hover:text-yellow-200 block px-3 py-2 rounded-md text-base font-medium" href="menu.html#">Menu</a>
+                    <button id="cart-button-mobile" class="cart-badge bg-yellow-600 hover:bg-yellow-800 text-white px-4 py-2 rounded-full" data-count="0" aria-label="Keranjang Belanja">🛒 Keranjang</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Menu Container -->
+    <main class="bg-rose-100">
+        <div class="container mx-auto px-4 py-8">
+            <h2 class="text-3xl font-bold text-center mb-8">Menu Kami</h2>
+            <div id="menu-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Menu items akan dimasukkan secara dinamis -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Script Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" async></script>
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            const isOpen = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+            mobileMenuButton.setAttribute('aria-expanded', !isOpen);
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        class MenuManager {
+            constructor() {
+                this.menuItems = [
+                  { id: "stok1", name: "Cotton Dress Black", price: 149000, description: "Miliki dress yang cocok kamu padankan dengan berbagai macam sepatu dan aksesoris!, Warna [HITAM].", image: "img/stok1.jpg" },
+                  { id: "stok2", name: "Shimmer Dress Brown", price: 186000, description: "Miliki dress yang cocok kamu padankan dengan berbagai macam sepatu dan aksesoris!, Warna [COKELAT].", image: "img/stok2.jpg" },
+                  { id: "stok3", name: "Denim Dress Blue", price: 162000, description: "Miliki dress yang cocok kamu padankan dengan berbagai macam sepatu dan aksesoris!, Warna [BIRU].", image: "img/stok3.jpg" },
+                  { id: "stok4", name: "Shimmer Dress Green", price: 180000, description: "Miliki dress yang cocok kamu padankan dengan berbagai macam sepatu dan aksesoris!, Warna [HIJAU].", image: "img/stok4.jpg" },
+                  { id: "stok5", name: "Cotton Dress White", price: 155000, description: "Miliki dress yang cocok kamu padankan dengan berbagai macam sepatu dan aksesoris!, Warna [PUITH].", image: "img/stok5.jpg" },
+                  { id: "stok6", name: "Denim Dress Grey", price: 166000, description: "Miliki dress yang cocok kamu padankan dengan berbagai macam sepatu dan aksesoris!, Warna [Abu-Abu].", image: "img/stok6.jpg" },
+                  { id: "stok7", name: "Denim Dress Black", price: 172000, description: "Miliki dress yang cocok kamu padankan dengan berbagai macam sepatu dan aksesoris!, Warna [HITAM].", image: "img/stok7.jpg" },
+                  { id: "stok8", name: "Cotton Dress Brown", price: 152000, description: "Miliki dress yang cocok kamu padankan dengan berbagai macam sepatu dan aksesoris!, Warna [COKELAT].", image: "img/stok8.jpg" },
+                  { id: "stok9", name: "Cotton Dress Sky Blue", price: 152000, description: "Miliki dress yang cocok kamu padankan dengan berbagai macam sepatu dan aksesoris!, Warna [BIRU-MUDA].", image: "img/stok9.jpg" },
+                  { id: "stok10", name: "Shimmer Dress B", price: 178000, description: "Miliki dress yang cocok kamu padankan dengan berbagai macam sepatu dan aksesoris!, Warna [HITAM].", image: "img/stok10.jpg" },
+                ];
+                this.cart = new Cart();
+                this.renderMenu();
+            }
+
+            renderMenu() {
+                const menuContainer = document.getElementById('menu-container');
+                menuContainer.innerHTML = this.menuItems.map(item => this.createMenuCard(item)).join('');
+                this.setupMenuInteractions();
+            }
+
+            createMenuCard(item) {
+                return `
+                    <div class="menu-card bg-yellow-100 shadow-lg rounded-lg overflow-hidden transform transition hover:scale-105" data-id="${item.id}" data-name="${item.name}" data-price="${item.price}">
+                        <img src="${item.image}" alt="${item .name}" class="w-full h-96 object-cover">
+                        <div class="p-4 bg-yellow-50">
+                            <h3 class="text-xl font-bold text-yellow-800 mb-2">${item.name}</h3>
+                            <p class="text-gray-600 mb-4">${item.description}</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-rose-700 font-bold">Rp${item.price.toLocaleString()}</span>
+                                <div class="flex items-center space-x-2">
+                                    <button class="btn-kurang bg-green-500 text-white px-2 py-1 rounded">-</button>
+                                    <input type="number" class="item-quantity w-12 text-center border rounded" value="0" min="0" readonly>
+                                    <button class="btn-tambah bg-green-500 text-white px-2 py-1 rounded">+</button>
+                                </div>
+                            </div>
+                            <button class="btn-keranjang w-full mt-4 bg-green-600 text-white py-2 rounded hover:bg-green-700">
+                                Tambah ke Keranjang
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            setupMenuInteractions() {
+                document.querySelectorAll('.menu-card').forEach(card => {
+                    const btnTambah = card.querySelector('.btn-tambah');
+                    const btnKurang = card.querySelector('.btn-kurang');
+                    const inputQuantity = card.querySelector('.item-quantity');
+                    const btnKeranjang = card.querySelector('.btn-keranjang');
+
+                    btnTambah.addEventListener('click', () => {
+                        inputQuantity.value = Math.min(10, parseInt(inputQuantity.value) + 1);
+                    });
+
+                    btnKurang.addEventListener('click', () => {
+                        inputQuantity.value = Math.max(0, parseInt(inputQuantity.value) - 1);
+                    });
+
+                    btnKeranjang.addEventListener('click', () => {
+                        const quantity = parseInt(inputQuantity.value);
+                        if (quantity > 0) {
+                            const item = {
+                                id: card.dataset.id,
+                                name: card.dataset.name,
+                                price: parseInt(card.dataset.price),
+                                quantity: quantity
+                            };
+                            this.cart.addItem(item);
+                            inputQuantity.value = 0;
+                        }
+                    });
+                });
+            }
+        }
+
+        class Cart {
+            constructor() {
+                this.items = JSON.parse(localStorage.getItem('cart-items')) || [];
+                this.cartButton = document.getElementById('cart-button');
+                this.cartButtonMobile = document.getElementById('cart-button-mobile');
+                this.setupCartButton();
+                this.updateCartBadge();
+            }
+
+            setupCartButton() {
+                this.cartButton.addEventListener('click', () => this.showCart());
+                this.cartButtonMobile.addEventListener('click', () => this.showCartMO());
+            }
+
+            addItem(item) {
+                const existingItemIndex = this.items.findIndex(i => i.id === item.id);
+                
+                if (existingItemIndex > -1) {
+                    this.items[existingItemIndex].quantity += item.quantity;
+                } else {
+                    this.items.push(item);
+                }
+
+                this.saveCart();
+                this.updateCartBadge();
+                this.showAddToCartNotification(item);
+            }
+
+            showAddToCartNotification(item) {
+                const isMobile = window.innerWidth < 768; // Check if the screen width is less than 768px
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Ditambahkan ke Keranjang',
+                    text: `${item.name} (${item.quantity}) telah ditambahkan`,
+                    toast: isMobile,
+                    position: isMobile ? 'top-end' : undefined,
+                    width: isMobile ? '500px' : undefined,
+                    showConfirmButton: !isMobile,
+                    timer: isMobile ? 1500 : undefined
+                });
+            }
+
+            saveCart() {
+                localStorage.setItem('cart-items', JSON.stringify(this.items));
+            }
+
+            updateCartBadge() {
+                const totalItems = this.items.reduce((total, item) => total + item.quantity, 0);
+                this.cartButton.setAttribute('data-count', totalItems);
+                this.cartButtonMobile.setAttribute('data-count', totalItems);
+            }
+
+            showCart() {
+                if (this.items.length === 0) {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Keranjang Kosong',
+                        text: 'Silakan tambahkan item terlebih dahulu'
+                    });
+                    return;
+                }
+
+                const cartContent = this.generateCartHTML();
+                Swal.fire({
+                    title: 'Keranjang Belanja',
+                    html: cartContent,
+                    showCancelButton: true,
+                    confirmButtonText: 'Checkout',
+                    cancelButtonText: 'Tutup',
+                    width: '800px',
+                    didRender: () => {
+                        this.setupCartItemActions();
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.checkout();
+                    }
+                });
+            }
+
+            showCartMO() {
+                if (this.items.length === 0) {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Keranjang Kosong',
+                        text: 'Silakan tambahkan item terlebih dahulu'
+                    });
+                    return;
+                }
+
+                const cartContent = this.generateCartHTMLMO();
+                Swal.fire({
+                    title: 'Keranjang Belanja',
+                    html: cartContent,
+                    showCancelButton: true,
+                    confirmButtonText: 'Checkout',
+                    cancelButtonText: 'Tutup',
+                    width: '90%', // Ubah lebar untuk tampilan mobile
+                    didRender: () => {
+                        this.setupCartItemActions();
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.checkout();
+                    }
+                });
+            }
+
+            setupCartItemActions() {
+                document.querySelectorAll('.btn-hapus-item').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const itemId = e.target.dataset.id;
+                        this.removeItem(itemId);
+                        this.showCart(); // Refresh cart view
+                    });
+                });
+
+                document.querySelectorAll('.btn-ubah-qty').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const itemId = e.target.dataset.id;
+                        const change = parseInt(e.target.dataset.change);
+                        this.updateItemQuantity(itemId, change);
+                        this.showCart(); // Refresh cart view
+                    });
+                });
+            }
+
+            updateItemQuantity(itemId, change) {
+                const itemIndex = this.items.findIndex(item => item.id === itemId);
+                if (itemIndex > -1) {
+                    this.items[itemIndex].quantity = Math.max(0, this.items[itemIndex].quantity + change);
+                    
+                    if (this.items[itemIndex].quantity === 0) {
+                        this.items.splice(itemIndex, 1);
+                    }
+                    
+                    this.saveCart();
+                    this.updateCartBadge();
+                }
+            }
+
+            generateCartHTML() {
+                const totalHarga = this.calculateTotal();
+                const itemsHTML = this.items.map(item => `
+                    <div class="flex justify-between items-center mb-2 p-2 bg-green-100 rounded">
+                        <div class="flex-grow">
+                            <span class="font-bold">${item.name}</span>
+                            <span class="text-gray-600 ml-2">Rp${item.price.toLocaleString()} x ${item.quantity}</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="btn-ubah-qty bg-green-500 text-white px-2 py-1 rounded" 
+                                    data-id="${item.id}" data-change="-1">-</button>
+                            <span>${item.quantity}</span>
+                            <button class="btn-ubah-qty bg-green-500 text-white px-2 py-1 rounded" 
+                                    data-id="${item.id}" data-change="1">+</button>
+                        </div>
+                        <span class="font-bold ml-4">Rp${(item.price * item.quantity).toLocaleString()}</span>
+                        <button class="btn-hapus-item bg-red-500 text-white px-2 py-1 rounded ml-2" 
+                                data-id="${item.id}">Hapus</button>
+                    </div>
+                `).join('');
+
+                return `
+                    <div>
+                        ${itemsHTML}
+                        <hr class="my-3">
+                        <div class="flex justify-between font-bold text-xl">
+                            <span>Total:</span>
+                            <span>Rp${totalHarga.toLocaleString()}</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            generateCartHTMLMO() {
+                const totalHarga = this.calculateTotal();
+                const itemsHTML = this.items.map(item => `
+                    <div class="flex flex-col md:flex-row justify-between items-center mb-2 p-2 bg-green-100 rounded">
+                        <div class="flex-grow">
+                            <span class="font-bold text-sm">${item.name}</span>
+                            <span class="text-gray-600 ml-2 text-xs">Rp${item.price.toLocaleString()} x ${item.quantity}</span>
+                        </div>
+                        <div class="flex items-center space-x-2 mt-2 md:mt-0">
+                            <button class="btn-ubah-qty bg-green-500 text-white px-2 text-sm py-1 rounded" 
+                                    data-id="${item.id}" data-change="-1">-</button>
+                            <span>${item.quantity}</span>
+                            <button
+                            class="btn-ubah-qty bg-green-500 text-white px-2 text-sm py-1 rounded" 
+                                    data-id="${item.id}" data-change="1">+</button>
+                        </div>
+                        <span class="text-lg font-bold ml-4">Rp${(item.price * item.quantity).toLocaleString()}</span>
+                        <button class="btn-hapus-item bg-red-500 text-white text-xs px-2 py-1 rounded ml-1" 
+                                data-id="${item.id}">Hapus</button>
+                    </div>
+                `).join('');
+
+                return `
+                    <div>
+                        ${itemsHTML}
+                        <hr class="my-3">
+                        <div class="flex justify-between font-bold text-sm">
+                            <span class="text-lg">Total:</span>
+                            <span>Rp${totalHarga.toLocaleString()}</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            calculateTotal() {
+                return this.items.reduce((total, item) => total + (item.price * item.quantity), 0);
+            }
+
+            removeItem(itemId) {
+                this.items = this.items.filter(item => item.id !== itemId);
+                this.saveCart();
+                this.updateCartBadge();
+            }
+
+            checkout() {
+                Swal.fire({
+                    title: 'Silahkan Isi‼️, jika sudah klik tombol dibawah ⬇️',
+                    html: this.generatePaymentMethodsHTML(),
+                    showCancelButton: true,
+                    showConfirmButton: false,
+                    cancelButtonText: 'Batal',
+                    didRender: () => {
+                        this.setupPaymentMethodListeners();
+                    }
+                }).then((result) => {
+                    if (result.isDismissed) {
+                        return; // Jika dibatalkan, tidak melakukan apa-apa
+                    }
+                });
+            }
+
+            generatePaymentMethodsHTML() {
+                const paymentMethods = [
+                    { method: 'cod', label: 'Pesan Sekarang', color: 'indigo' }
+                ];
+
+                return `
+                    <div class="space-y-4">
+                        ${paymentMethods.map(method => `
+                            <button class="payment-method w-full bg-${method.color}-500 text-white py-2 rounded" 
+                                    data-method="${method.method}">
+                                ${method.label}
+                            </button>
+                        `).join('')}
+                        <div class="mt-4">
+                            <select type="text" id="customer-name" placeholder="Nama" class="border p-2 w-full">
+                            <option>Pilih Size</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            </select>
+                            <input type="text" id="customer-class" placeholder="Nama" class="border p-2 w-full mt-2">
+                            <input type="number" id="customer-major" placeholder="Nomor hp" class="border p-2 w-full mt-2">
+                        </div>
+                    </div>
+                `;
+            }
+
+            setupPaymentMethodListeners() {
+                document.querySelectorAll('.payment-method').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const paymentMethod = e.target.dataset.method;
+                        const name = document.getElementById('customer-name').value;
+                        const className = document.getElementById('customer-class').value;
+                        const major = document.getElementById('customer-major').value;
+
+                        if (!name || !className || !major) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Data Tidak Lengkap',
+                                text: 'Silakan isi semua informasi yang diperlukan.'
+                            });
+                            return; // Tidak melanjutkan jika informasi tidak lengkap
+                        }
+
+                        this.processPayment(paymentMethod, name, className, major);
+                    });
+                });
+            }
+
+            processPayment(method, name, className, major) {
+                const pesananItems = this.items.map(item => 
+                    `${item.name} (${item.quantity}x) - Rp${(item.price * item.quantity).toLocaleString()}`
+                ).join('%0A');
+                
+                const totalHarga = this.calculateTotal();
+                
+                let paymentMessage = `Metode Pembayaran: ${this.getPaymentMethodName(method)}%0A%0APesanan:%0A${pesananItems}%0A%0ATotal: Rp${totalHarga.toLocaleString()}%0A%0ASize: ${name}%0A%0ANama: ${className}%0A%0ANomor hp: ${major}`;
+                
+                switch(method) {
+                    case 'cod':
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Pemesanan Berhasil',
+                            text: 'Terimakasih sudah membeli di toko kami😊👌, silahkan konfirmasi dibawah!',
+                            confirmButtonText: 'Konfirmasi Pesanan'
+                        }).then(() => {
+                            window.open(`https://api.whatsapp.com/send/?phone=6283870874087&text=${paymentMessage}&type=phone_number&app_absent=0`, '_blank');
+                            this.resetCart();
+                        });
+                        break;
+                }
+            }
+
+            getPaymentMethodName(method) {
+                const methods = {
+                    'cod': 'Cash on Delivery'
+                };
+                return methods[method] || 'Metode Pembayaran Tidak Dikenal';
+            }
+
+            resetCart() {
+                this.items = [];
+                this.saveCart();
+                this.updateCartBadge();
+            }
+        }
+
+        // Inisialisasi MenuManager
+        const menuManager = new MenuManager();
+    </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Bazar XI RPL-2</title>
+    <link rel="icon" href="logo.jpg">
+
+    <!-- CSS Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="bg-rose-100">
+    <!-- Header -->
+    <header class="bg-rose-50">
+        <nav class="bg-rose-950 text-yellow-100 sticky top-0 z-100 shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center">
+                        <img alt="Company Logo" class="h-8 w-8 rounded-full" src="img/logo.jpg" />
+                        <h1 class="text-lg font-bold sm:text-xl px-2">Complete Dress Shop</h1>
+                    </div>
+                    <div class="hidden sm:flex sm:space-x-8">
+                        <a class="border-sky-50 text-white hover:text-yellow-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="index.html">Beranda</a>
+                        <a class="border-transparent text-white hover:text-yellow-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="menu.html">Menu</a>
+                        <button id="cart-button" class="cart-badge bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-full" data-count="0" aria-label="Keranjang Belanja">🛒 Keranjang</button>
+                    </div>
+                    <div class="-mr-2 flex sm:hidden">
+                        <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false" id="mobile-menu-button">
+                            <span class="sr-only">Open main menu</span>
+                            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                            </svg>
+                            <svg class="hidden h-6 w-6" xmlns="http://www.w3 ```html
+.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Mobile menu -->
+            <div class="sm:hidden" id="mobile-menu">
+                <div class="space-y-1 px-2 pb-3">
+                    <a class="border-sky-50 text-yellow-50 hover:text-yellow-200 block px-3 py-2 rounded-md text-base font-medium" href="index.html">Home</a>
+                    <a class="border-transparent text-yellow-50 hover:text-yellow-200 block px-3 py-2 rounded-md text-base font-medium" href="menu.html#">Product</a>
+                    <button id="cart-button-mobile" class="cart-badge bg-yellow-600 hover:bg-yellow-800 text-white px-4 py-2 rounded-full" data-count="0" aria-label="Keranjang Belanja">🛒 Keranjang</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Menu Container -->
+    <main class="bg-rose-100">
+        <div class="container mx-auto px-1 py-1">
+            <h2 style="color: rgb(255, 153, 0); margin-top: 5%; background-color: azure; padding: 5%;" class="text-3xl font-bold text-center mb-8">Toko Khusus Dress</h2>
+            <div id="menu-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Menu items akan dimasukkan secara dinamis -->
+            </div>
+        </div>
+    </main>
+        <section id="interface">
+        <div class="values">
+        <div class="board">
+            <div class="poster">
+                <img width="100%" src="img/logo2.jpg" alt="poster">
+            </div>
+        </div>
+    </section>
+
+    <!-- Script Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" async></script>
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            const isOpen = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+            mobileMenuButton.setAttribute('aria-expanded', !isOpen);
+            mobileMenu.classList.toggle('hidden');
+        });
+        const menuManager = new MenuManager();
+    </script>
+  
+</body>
+</html>
